@@ -67,7 +67,7 @@ namespace CRUD_App.Controllers
                 };
 
 
-                return View(viewModel);
+                return await Task.Run(() => View("View", viewModel));
 
             }
             
@@ -75,6 +75,28 @@ namespace CRUD_App.Controllers
 
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> View(UpdateMemberViewModel model)
+        {
+            var member = await crudAppDbContext.Members.FindAsync(model.Id);
+
+            if(member != null)
+            {
+                member.FirstName = model.FirstName;
+                member.SurName = model.SurName;
+                member.Age = model.Age;
+
+                await crudAppDbContext.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+
+            };
+
+            return RedirectToAction("Index");
+
+        }
+
 
     }
     
