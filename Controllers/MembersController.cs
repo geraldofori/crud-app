@@ -3,6 +3,8 @@ using CRUD_App.Data;
 using CRUD_App.Models;
 using CRUD_App.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace CRUD_App.Controllers
 {
@@ -17,12 +19,22 @@ namespace CRUD_App.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add(){
+        public async Task<IActionResult> Index()
+        {
+            var members = await crudAppDbContext.Members.ToListAsync();
+            return View(members);
+
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddMemberViewModel addMemberRequest){
+        public async Task<IActionResult> Add(AddMemberViewModel addMemberRequest)
+        {
             var member = new Member()
             {
                 Id = Guid.NewGuid(),
@@ -34,7 +46,7 @@ namespace CRUD_App.Controllers
 
             await crudAppDbContext.Members.AddAsync(member);
             await crudAppDbContext.SaveChangesAsync();
-            return RedirectToAction("Add");
+            return RedirectToAction("Index");
 
         }
     }

@@ -1,0 +1,28 @@
+@model List<CRUD_App.Models.Domain.Member>
+@{
+
+}
+<h3>Members</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var member in Model)
+        {
+            <tr>
+                <td>@member.Id</td>
+                <td>@member.FirstName</td>
+                <td>@member.SurName</td>
+                <td>@member.Age</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
