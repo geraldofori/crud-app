@@ -1,6 +1,6 @@
 namespace CRUD_App.Models
 {
-    public class AddMemberViewModel
+    public class UpdateMemberViewModel
     {
         public Guid Id {get; set; }
 

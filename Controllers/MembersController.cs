@@ -49,6 +49,33 @@ namespace CRUD_App.Controllers
             return RedirectToAction("Index");
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> View(Guid id)
+        {
+            var member =  await crudAppDbContext.Members.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(member != null)
+            {
+                var viewModel = new UpdateMemberViewModel()
+                {
+                    Id = member.Id,
+                    FirstName = member.FirstName,
+                    SurName = member.SurName,
+                    Age = member.Age
+
+                };
+
+
+                return View(viewModel);
+
+            }
+            
+            return RedirectToAction("Index");
+
+
+        }
+
     }
     
 }
