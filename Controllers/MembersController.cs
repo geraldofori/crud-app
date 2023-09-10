@@ -97,6 +97,25 @@ namespace CRUD_App.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(UpdateMemberViewModel model)
+        {
+            var member = await crudAppDbContext.Members.FindAsync(model.Id);
+
+            if(member != null)
+            {
+                crudAppDbContext.Members.Remove(member);
+
+                await crudAppDbContext.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+
+
+        }
+
 
     }
     
