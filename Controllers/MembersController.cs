@@ -19,12 +19,27 @@ namespace CRUD_App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
+            // Get all members initially
             var members = await crudAppDbContext.Members.ToListAsync();
-            return View(members);
 
+            // Check if a search string is provided
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                // Filter members based on the search string
+                members = members.Where(m =>
+                    m.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    m.SurName.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+            }
+
+            // Pass the search string to the view so that it can be displayed in the search input field
+            ViewData["CurrentFilter"] = searchString;
+
+            return View(members);
         }
+
 
         [HttpGet]
         public IActionResult Add()
