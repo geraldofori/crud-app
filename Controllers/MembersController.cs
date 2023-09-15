@@ -54,6 +54,7 @@ namespace CRUD_App.Controllers
             {
                 Id = Guid.NewGuid(),
                 FirstName = addMemberRequest.FirstName,
+                MiddleName = addMemberRequest.MiddleName,
                 SurName = addMemberRequest.SurName,
                 Age = addMemberRequest.Age
 
@@ -76,6 +77,7 @@ namespace CRUD_App.Controllers
                 {
                     Id = member.Id,
                     FirstName = member.FirstName,
+                    MiddleName = member.MiddleName,
                     SurName = member.SurName,
                     Age = member.Age
 
@@ -100,6 +102,7 @@ namespace CRUD_App.Controllers
             {
                 member.FirstName = model.FirstName;
                 member.SurName = model.SurName;
+                member.MiddleName = model.MiddleName;
                 member.Age = model.Age;
 
                 await crudAppDbContext.SaveChangesAsync();
